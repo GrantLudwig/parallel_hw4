@@ -47,17 +47,14 @@ public class BitonicThreadLoop implements Runnable {
             for (int j = k / 2; j > 0; j /= 2) {  // j is one bit, marching from k to the right
                 // i is the merge element
                 for (int i = startIndex; i <= endIndex; i++) {
-                    // check to see if the thread manages that index
-                    //if (availableIndex(i)) {
-                        int ixj = i ^ j;  // xor: all the bits that are on in one and off in the other
-                        // only compare if ixj is to the right of i
-                        if (ixj > i) {
-                            if ((i & k) == 0 && data[i] > data[ixj])
-                                swap(i, ixj);
-                            if ((i & k) != 0 && data[i] < data[ixj])
-                                swap(i, ixj);
-                        }
-                    //}
+                    int ixj = i ^ j;  // xor: all the bits that are on in one and off in the other
+                    // only compare if ixj is to the right of i
+                    if (ixj > i) {
+                        if ((i & k) == 0 && data[i] > data[ixj])
+                            swap(i, ixj);
+                        if ((i & k) != 0 && data[i] < data[ixj])
+                            swap(i, ixj);
+                    }
                 }
                 try {
                     barrier.await();
@@ -68,10 +65,6 @@ public class BitonicThreadLoop implements Runnable {
                 }
             }
         }
-    }
-
-    private boolean availableIndex(int i) {
-        return (startIndex <= i && i <= endIndex);
     }
 
     private void swap(int firstIndex, int secondIndex) {

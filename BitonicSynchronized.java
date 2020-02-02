@@ -55,11 +55,13 @@ public class BitonicSynchronized {
                 double[] newArray = RandomArrayGenerator.getArray(N);
                 newSortbarrier.await(); // wait for sort to complete
 
+                double[] sortedArray = data;
+                data = newArray;
+                newSortbarrier.await(); // new data array created
+
                 if (!RandomArrayGenerator.isSorted(data) || N != data.length)
                     System.out.println("failed");
                 work++;
-                data = newArray;
-                newSortbarrier.await(); // new data array created
             } catch (InterruptedException ex) {
                 return;
             } catch (BrokenBarrierException ex) {
@@ -69,46 +71,6 @@ public class BitonicSynchronized {
 
         System.out.println("sorted " + work + " arrays (each: " + N + " doubles) in "
                 + TIME_ALLOWED + " seconds");
-
-        // multi one test
-//        long start = System.currentTimeMillis();
-//        Thread[] sortThreads = new Thread[P];
-//        CyclicBarrier barrier = new CyclicBarrier(P);
-//        int sectionSize = (int) Math.ceil(N/P);
-//        double[] data = new double[N];
-//        data = RandomArrayGenerator.getArray(N);
-//
-//        int startIndex = 0;
-//        // setup threads
-//        for (int i = 0; i < P; i++) {
-//            int     endIndex,
-//                    calcIndex = startIndex + sectionSize - 1;
-//
-//            // setup endIndex
-//            if (calcIndex >= N)
-//                endIndex = N - 1;
-//            else
-//                endIndex = calcIndex;
-//
-//            sortThreads[i] = new Thread(new BitonicThreadLoop(data, barrier, startIndex, endIndex));
-//            sortThreads[i].start();
-//            startIndex = endIndex + 1; // set start index for next sorter
-//        }
-//
-//        for (int i = 0; i < P; i++) {
-//            try {
-//                sortThreads[i].join();
-//            } catch (InterruptedException ex) {
-//                return;
-//            }
-//        }
-//
-//        if (!RandomArrayGenerator.isSorted(data) || N != data.length)
-//            System.out.println("failed");
-//
-//        long end = System.currentTimeMillis();
-//        long completed = end - start;
-//        System.out.println("Time took: " + completed);
 
         for (int i = 0; i < P; i++)
             sortThreads[i].interrupt();
