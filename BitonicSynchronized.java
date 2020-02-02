@@ -55,7 +55,7 @@ public class BitonicSynchronized {
         }
 
 
-        while (System.currentTimeMillis() < start + TIME_ALLOWED * 1000) {
+        //while (System.currentTimeMillis() < start + TIME_ALLOWED * 1000) {
             try {
                 double[] newArray = RandomArrayGenerator.getArray(N);
                 newSortbarrier.await(); // wait for sort to complete
@@ -72,7 +72,7 @@ public class BitonicSynchronized {
             } catch (BrokenBarrierException ex) {
                 return;
             }
-        }
+        //}
 
         System.out.println("sorted " + work + " arrays (each: " + N + " doubles) in "
                 + TIME_ALLOWED + " seconds");
