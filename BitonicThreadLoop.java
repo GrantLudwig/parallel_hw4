@@ -28,10 +28,10 @@ public class BitonicThreadLoop implements Runnable {
     }
 
     public void sort() {
-        for (int k = 2; k <= arraySize; k *= 2) { // k is one bit, marching to the left
+        for (int k = 2; k <= data.length; k *= 2) { // k is one bit, marching to the left
             // j is the distance between the first and second halves of the merge
             // corresponds to 1<<p in textbook
-            for (int j = k / 2; j > startIndex; j /= 2) {  // j is one bit, marching from k to the right
+            for (int j = k / 2; j > 0; j /= 2) {  // j is one bit, marching from k to the right
                 // i is the merge element
                 for (int i = startIndex; i < endIndex; i++) {
                     int ixj = i ^ j;  // xor: all the bits that are on in one and off in the other
