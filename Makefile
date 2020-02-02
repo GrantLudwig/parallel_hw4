@@ -1,4 +1,4 @@
-CLASSES = RandomArrayGenerator.class
+CLASSES = RandomArrayGenerator.class BitonicSynchronized.class BitonicThreadLoop.class
 JAVAFLAGS = -J-Xmx48m
 
 
