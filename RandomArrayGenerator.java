@@ -66,7 +66,7 @@ public class RandomArrayGenerator implements Runnable {
         double last = a[0];
         for (int i = 1; i < a.length; i++) {
             if (a[i] < last) {
-                System.out.println(last + ":" + a[i]);
+                //System.out.println(last + ":" + a[i]);
                 return false;
             }
             last = a[i];
