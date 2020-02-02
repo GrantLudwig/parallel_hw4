@@ -42,11 +42,11 @@ public class BitonicSynchronized {
         // single test
         double[] data = new double[N];
         data = RandomArrayGenerator.getArray(N);
-        println(" ");
+        System.out.println(" ");
         for (int i = 0; i < data.length; i++) {
-            print(data[i] + " ");
+            System.out.print(data[i] + " ");
         }
-        println(" ");
+        System.out.println(" ");
         BitonicThreadLoop test = new BitonicThreadLoop(data, 0, N - 1);
         test.sort();
         if (!RandomArrayGenerator.isSorted(data) || N != ult.length)
