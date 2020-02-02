@@ -62,6 +62,9 @@ public class BitonicSynchronized {
             startIndex = endIndex + 1; // set start index for next sorter
         }
 
+        for (int i = 0; i < P; i++)
+            sortThreads[i].wait();
+
         if (!RandomArrayGenerator.isSorted(data) || N != data.length)
             System.out.println("failed");
 
