@@ -23,30 +23,31 @@ public class BitonicThreadLoop implements Runnable {
         this.data = data;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
-        this.arraySize = endIndex - startIndex + 1;
+        this.arraySize = data.length;
         System.out.println("Start: " + startIndex + " End: " + endIndex + " ArraySize: " + arraySize);
     }
 
     public void sort() {
-        for (int k = 2; k <= data.length; k *= 2) { // k is one bit, marching to the left
+        for (int k = 2; k <= arraySize; k *= 2) { // k is one bit, marching to the left
             // j is the distance between the first and second halves of the merge
             // corresponds to 1<<p in textbook
             for (int j = k / 2; j > 0; j /= 2) {  // j is one bit, marching from k to the right
                 // i is the merge element
-                for (int i = startIndex; i < endIndex; i++) {
-                    int ixj = i ^ j;  // xor: all the bits that are on in one and off in the other
-                    // only compare if ixj is to the right of i
-                    if (ixj > i) {
-                        if ((i & k) == 0 && data[i] > data[ixj])
-                            swap(i, ixj);
-                        if ((i & k) != 0 && data[i] < data[ixj])
-                            swap(i, ixj);
+                for (int i = 0; i < arraySize; i++) {
+                    // check to see if the thread manages that index
+                    if (availableIndex(i)) {
+                        int ixj = i ^ j;  // xor: all the bits that are on in one and off in the other
+                        // only compare if ixj is to the right of i
+                        if (ixj > i) {
+                            if ((i & k) == 0 && data[i] > data[ixj])
+                                swap(i, ixj);
+                            if ((i & k) != 0 && data[i] < data[ixj])
+                                swap(i, ixj);
+                        }
                     }
                 }
                 try {
-                    System.out.println("Wait");
                     barrier.await();
-                    System.out.println(" ");
                 } catch (InterruptedException ex) {
                     return;
                 } catch (BrokenBarrierException ex) {
@@ -56,6 +57,16 @@ public class BitonicThreadLoop implements Runnable {
         }
     }
 
+    private boolean availableIndex(int i) {
+        return (startIndex <= i && i <= endIndex);
+    }
+
+    private void swap(int firstIndex, int secondIndex) {
+        double temp = data[firstIndex];
+        data[firstIndex] = data[secondIndex];
+        data[secondIndex] = temp;
+    }
+
     /***
      * Run when used in a thread
      */
@@ -63,11 +74,5 @@ public class BitonicThreadLoop implements Runnable {
     public void run() {
         sort();
         System.out.println("Completed");
-    }
-
-    private void swap(int firstIndex, int secondIndex) {
-        double temp = data[firstIndex];
-        data[firstIndex] = data[secondIndex];
-        data[secondIndex] = temp;
     }
 }
