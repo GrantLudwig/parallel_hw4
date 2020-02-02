@@ -61,6 +61,7 @@ public class BitonicSynchronized {
             sortThreads[i] = new Thread(new BitonicThreadLoop(data, barrier, startIndex, endIndex));
             sortThreads[i].start();
             startIndex = endIndex + 1; // set start index for next sorter
+            System.out.println("Thread Created");
         }
 
         for (int i = 0; i < P; i++) {
