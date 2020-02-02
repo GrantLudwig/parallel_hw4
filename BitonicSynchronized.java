@@ -59,7 +59,7 @@ public class BitonicSynchronized {
                 data = newArray;
                 newSortbarrier.await(); // new data array created
 
-                if (!RandomArrayGenerator.isSorted(data) || N != data.length)
+                if (!RandomArrayGenerator.isSorted(sortedArray) || N != sortedArray.length)
                     System.out.println("failed");
                 work++;
             } catch (InterruptedException ex) {
