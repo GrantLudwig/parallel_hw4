@@ -45,8 +45,6 @@ public class BitonicThreadLoop implements Runnable {
                     barrier.await();
                 } catch (InterruptedException ex) {
                     return;
-                } catch (BrokenBarrierException ex) {
-                    return;
                 }
             }
         }

@@ -7,6 +7,7 @@
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.CyclicBarrier;
+import java.lang.Math;
 
 public class BitonicSynchronized {
     //public static final int N = 1 << 22;  // size of the final sorted array (power of two)
@@ -41,7 +42,7 @@ public class BitonicSynchronized {
         // multi one test
         Thread[] sortThreads = new Thread[P];
         CyclicBarrier barrier = new CyclicBarrier(P);
-        int sectionSize = ceil(N/P);
+        int sectionSize = Math.ceil(N/P);
         double[] data = new double[N];
         data = RandomArrayGenerator.getArray(N);
 
