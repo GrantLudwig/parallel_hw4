@@ -22,7 +22,7 @@ public class BitonicThreadLoop implements Runnable {
         this.arraySize = endIndex - startIndex + 1;
     }
 
-    public sort() {
+    public void sort() {
         for (int k = 2; k <= arraySize; k *= 2) { // k is one bit, marching to the left
             // j is the distance between the first and second halves of the merge
             // corresponds to 1<<p in textbook

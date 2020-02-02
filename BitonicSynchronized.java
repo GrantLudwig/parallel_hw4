@@ -31,7 +31,7 @@ public class BitonicSynchronized {
 //
 //            // Thread stuff
 //
-//            if (!RandomArrayGenerator.isSorted(data) || N != ult.length)
+//            if (!RandomArrayGenerator.isSorted(data) || N != data.length)
 //                System.out.println("failed");
 //            work++;
 //        }
@@ -49,7 +49,12 @@ public class BitonicSynchronized {
         System.out.println(" ");
         BitonicThreadLoop test = new BitonicThreadLoop(data, 0, N - 1);
         test.sort();
-        if (!RandomArrayGenerator.isSorted(data) || N != ult.length)
+        System.out.println(" ");
+        for (int i = 0; i < data.length; i++) {
+            System.out.print(data[i] + " ");
+        }
+        System.out.println(" ");
+        if (!RandomArrayGenerator.isSorted(data) || N != data.length)
                 System.out.println("failed");
     }
 }
