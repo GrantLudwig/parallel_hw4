@@ -59,7 +59,7 @@ public class BitonicSynchronized {
                 data = RandomArrayGenerator.getArray(N);
                 System.out.println(" ");
                 System.out.println("New Data array");
-                for (int i = 0; i < arraySize; i++) {
+                for (int i = 0; i < data.length; i++) {
                     System.out.print(data[i] + " ");
                 }
                 System.out.println(" ");
