@@ -71,11 +71,11 @@ public class BitonicThreadLoop implements Runnable {
                 }
                 try {
                     if (k == data.length) {
-                        System.out.println("In large K: " + name);
+                        //System.out.println("In large K: " + name);
                         largeBarrier.await();
                     }
                     else {
-                        System.out.println("small: " + name);
+                        //System.out.println("small: " + name);
                         smallBarrier.await();
                     }
                 } catch (InterruptedException ex) {
@@ -101,7 +101,7 @@ public class BitonicThreadLoop implements Runnable {
         while(true) {
             data = BitonicSynchronized.data; // get the data array to be sorted
             sort();
-            System.out.println("Complete");
+            //System.out.println("Complete");
             try {
                 newSortbarrier.await(); // sort completed
                 newSortbarrier.await(); // new data array is created

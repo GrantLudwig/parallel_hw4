@@ -55,24 +55,21 @@ public class BitonicSynchronized {
         }
 
 
-        //while (System.currentTimeMillis() < start + TIME_ALLOWED * 1000) {
+        while (System.currentTimeMillis() < start + TIME_ALLOWED * 1000) {
             try {
                 double[] newArray = RandomArrayGenerator.getArray(N);
                 newSortbarrier.await(); // wait for sort to complete
 
-                double[] sortedArray = data;
-                data = newArray;
-                newSortbarrier.await(); // new data array created
-
-                if (!RandomArrayGenerator.isSorted(sortedArray) || N != sortedArray.length)
+                if (!RandomArrayGenerator.isSorted(data) || N != data.length)
                     System.out.println("failed");
+                newSortbarrier.await(); // new data array created
                 work++;
             } catch (InterruptedException ex) {
                 return;
             } catch (BrokenBarrierException ex) {
                 return;
             }
-        //}
+        }
 
         System.out.println("sorted " + work + " arrays (each: " + N + " doubles) in "
                 + TIME_ALLOWED + " seconds");
