@@ -13,7 +13,7 @@ public class BitonicThreadLoop implements Runnable {
     private static final int timeout = 10;  // in seconds
 
     private double[] data;
-    private CyclicBarrier   barrier,
+    private CyclicBarrier[]   barrier,
                             newSortbarrier;
     private int startIndex,
                 endIndex;
@@ -57,7 +57,10 @@ public class BitonicThreadLoop implements Runnable {
                     }
                 }
                 try {
-                    barrier.await();
+                    if (k == data.length)
+                        barrier[1].await();
+                    else
+                        barrier[0].await();
                 } catch (InterruptedException ex) {
                     return;
                 } catch (BrokenBarrierException ex) {

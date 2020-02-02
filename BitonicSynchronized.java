@@ -12,7 +12,7 @@ import java.lang.Math;
 
 public class BitonicSynchronized {
     public static final int N = 1 << 22;  // size of the final sorted array (power of two)
-    //public static final int N = 16;
+    //public static final int N = 16; // needs to be a multiple of 2
     public static final int P = 8; // number of threads
     //public static final int TIME_ALLOWED = 10;  // seconds
     public static final int TIME_ALLOWED = 10;
@@ -26,7 +26,9 @@ public class BitonicSynchronized {
         long start = System.currentTimeMillis();
         int work = 0;
         Thread[] sortThreads = new Thread[P];
-        CyclicBarrier barrier = new CyclicBarrier(P);
+        CyclicBarrier[] barrier; = new CyclicBarrier(P);
+        barrier[0] = new CyclicBarrier(P/2);
+        barrier[1] = new CyclicBarrier(P);
         CyclicBarrier newSortbarrier = new CyclicBarrier(P + 1);
         int sectionSize = (int) Math.ceil(N/P);
         data = new double[N];
