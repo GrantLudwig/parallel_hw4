@@ -88,6 +88,7 @@ public class BitonicThreadLoop implements Runnable {
         while(true) {
             data = BitonicSynchronized.data; // get the data array to be sorted
             sort();
+            System.out.println("Complete");
             try {
                 newSortbarrier.await(); // sort completed
                 newSortbarrier.await(); // new data array is created
