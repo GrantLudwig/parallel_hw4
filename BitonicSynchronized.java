@@ -42,7 +42,7 @@ public class BitonicSynchronized {
         // multi one test
         Thread[] sortThreads = new Thread[P];
         CyclicBarrier barrier = new CyclicBarrier(P);
-        int sectionSize = Math.ceil(N/P);
+        int sectionSize = (int) Math.ceil(N/P);
         double[] data = new double[N];
         data = RandomArrayGenerator.getArray(N);
 
