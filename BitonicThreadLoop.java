@@ -47,12 +47,12 @@ public class BitonicThreadLoop implements Runnable {
      */
     @Override
     public void run() {
-        while (true) {
-            try {
-            } catch (InterruptedException e) {
-                return;
-            }
-        }
+//        while (true) {
+//            try {
+//            } catch (InterruptedException e) {
+//                return;
+//            }
+//        }
     }
 
     private void swap(int firstIndex, int secondIndex) {
