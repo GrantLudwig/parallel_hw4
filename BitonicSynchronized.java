@@ -40,7 +40,7 @@ public class BitonicSynchronized {
 //                + TIME_ALLOWED + " seconds");
 
         // single test
-        double[] data = new double[];
+        double[] data = new double[N];
         data = RandomArrayGenerator.getArray(N);
         println(" ");
         for (int i = 0; i < data.length; i++) {
