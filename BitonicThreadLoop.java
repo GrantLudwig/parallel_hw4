@@ -13,17 +13,15 @@ public class BitonicThreadLoop implements Runnable {
     private static final int timeout = 10;  // in seconds
 
     private double[] data;
-    private CyclicBarrier smallBarrier;
-    private CyclicBarrier largeBarrier;
+    private CyclicBarrier barrier;
     private CyclicBarrier newSortbarrier;
     private int startIndex,
                 endIndex;
     private String name;
 
-    public BitonicThreadLoop(double[] data, CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
+    public BitonicThreadLoop(double[] data, CyclicBarrier barrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
         this.data = data;
-        this.smallBarrier = smallBarrier;
-        this.largeBarrier = largeBarrier;
+        this.barrier = barrier;
         this.newSortbarrier = newSortbarrier;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
@@ -36,21 +34,11 @@ public class BitonicThreadLoop implements Runnable {
      * @param startIndex
      * @param endIndex
      */
-    public BitonicThreadLoop(CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
-        this.smallBarrier = smallBarrier;
-        this.largeBarrier = largeBarrier;
+    public BitonicThreadLoop(CyclicBarrier barrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
+        this.barrier = barrier;
         this.newSortbarrier = newSortbarrier;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
-    }
-
-    public BitonicThreadLoop(CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex, String name) {
-        this.smallBarrier = smallBarrier;
-        this.largeBarrier = largeBarrier;
-        this.newSortbarrier = newSortbarrier;
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
-        this.name = name;
     }
 
     public void sort() {
@@ -70,14 +58,7 @@ public class BitonicThreadLoop implements Runnable {
                     }
                 }
                 try {
-                    if (k == data.length) {
-                        //System.out.println("In large K: " + name);
-                        largeBarrier.await();
-                    }
-                    else {
-                        //System.out.println("small: " + name);
-                        smallBarrier.await();
-                    }
+                    barrier.await();
                 } catch (InterruptedException ex) {
                     return;
                 } catch (BrokenBarrierException ex) {
