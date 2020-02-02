@@ -16,8 +16,7 @@ public class BitonicThreadLoop implements Runnable {
     private CyclicBarrier   barrier,
                             newSortbarrier;
     private int startIndex,
-                endIndex,
-                arraySize;
+                endIndex;
 
     public BitonicThreadLoop(double[] data, CyclicBarrier barrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
         this.data = data;
@@ -25,7 +24,6 @@ public class BitonicThreadLoop implements Runnable {
         this.newSortbarrier = newSortbarrier;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
-        this.arraySize = data.length;
     }
 
     /**
@@ -40,16 +38,15 @@ public class BitonicThreadLoop implements Runnable {
         this.newSortbarrier = newSortbarrier;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
-        this.arraySize = data.length;
     }
 
     public void sort() {
-        for (int k = 2; k <= arraySize; k *= 2) { // k is one bit, marching to the left
+        for (int k = 2; k <= data.length; k *= 2) { // k is one bit, marching to the left
             // j is the distance between the first and second halves of the merge
             // corresponds to 1<<p in textbook
             for (int j = k / 2; j > 0; j /= 2) {  // j is one bit, marching from k to the right
                 // i is the merge element
-                for (int i = 0; i < arraySize; i++) {
+                for (int i = 0; i < data.length; i++) {
                     // check to see if the thread manages that index
                     if (availableIndex(i)) {
                         int ixj = i ^ j;  // xor: all the bits that are on in one and off in the other
