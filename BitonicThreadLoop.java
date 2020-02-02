@@ -59,6 +59,7 @@ public class BitonicThreadLoop implements Runnable {
     @Override
     public void run() {
         sort();
+        System.out.println("Completed");
     }
 
     private void swap(int firstIndex, int secondIndex) {
