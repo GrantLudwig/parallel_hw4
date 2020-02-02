@@ -14,7 +14,7 @@ public class BitonicSynchronized {
     //public static final int N = 16;
     public static final int P = 2; // number of threads
     //public static final int TIME_ALLOWED = 10;  // seconds
-    public static final int TIME_ALLOWED = 2;
+    public static final int TIME_ALLOWED = 10;
 
     /**
      *
