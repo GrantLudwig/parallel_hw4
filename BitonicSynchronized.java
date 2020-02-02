@@ -40,6 +40,9 @@ public class BitonicSynchronized {
             int     endIndex,
                     calcIndex = startIndex + sectionSize - 1;
 
+            if (i == P/2)
+                barrier[0] = new CyclicBarrier(P/2);
+
             // setup endIndex
             if (calcIndex >= N)
                 endIndex = N - 1;
