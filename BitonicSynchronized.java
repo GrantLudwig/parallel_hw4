@@ -25,6 +25,7 @@ public class BitonicSynchronized {
         int work = 0;
         Thread[] sortThreads = new Thread[P];
         CyclicBarrier barrier = new CyclicBarrier(P);
+        CyclicBarrier newSortbarrier = new CyclicBarrier(P + 1);
         int sectionSize = (int) Math.ceil(N/P);
         double[] data = new double[N];
 
@@ -41,25 +42,20 @@ public class BitonicSynchronized {
             else
                 endIndex = calcIndex;
 
-            sortThreads[i] = new Thread(new BitonicThreadLoop(data, barrier, startIndex, endIndex));
+            sortThreads[i] = new Thread(new BitonicThreadLoop(data, barrier, newSortbarrier, startIndex, endIndex));
             sortThreads[i].start();
             startIndex = endIndex + 1; // set start index for next sorter
         }
 
 
         while (System.currentTimeMillis() < start + TIME_ALLOWED * 1000) {
-            for (int i = 0; i < P; i++) {
-                try {
-                    sortThreads[i].join();
-                } catch (InterruptedException ex) {
-                    return;
-                }
-            }
+            newSortbarrier.await();
 
             if (!RandomArrayGenerator.isSorted(data) || N != data.length)
                 System.out.println("failed");
             work++;
             data = RandomArrayGenerator.getArray(N);
+            newSortbarrier.await();
         }
 
         System.out.println("sorted " + work + " arrays (each: " + N + " doubles) in "
