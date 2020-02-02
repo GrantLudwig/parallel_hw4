@@ -13,12 +13,12 @@ public class BitonicThreadLoop implements Runnable {
     private static final int timeout = 10;  // in seconds
 
     private double[] data;
-    private CyclicBarrier[]   barrier,
-                            newSortbarrier;
+    private CyclicBarrier[] barrier;
+    private CyclicBarrier newSortbarrier;
     private int startIndex,
                 endIndex;
 
-    public BitonicThreadLoop(double[] data, CyclicBarrier barrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
+    public BitonicThreadLoop(double[] data, CyclicBarrier[] barrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
         this.data = data;
         this.barrier = barrier;
         this.newSortbarrier = newSortbarrier;
@@ -33,7 +33,7 @@ public class BitonicThreadLoop implements Runnable {
      * @param startIndex
      * @param endIndex
      */
-    public BitonicThreadLoop(CyclicBarrier barrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
+    public BitonicThreadLoop(CyclicBarrier barrier, CyclicBarrier[] newSortbarrier, int startIndex, int endIndex) {
         this.barrier = barrier;
         this.newSortbarrier = newSortbarrier;
         this.startIndex = startIndex;
