@@ -40,6 +40,7 @@ public class BitonicSynchronized {
 //                + TIME_ALLOWED + " seconds");
 
         // multi one test
+        long start = System.currentTimeMillis();
         Thread[] sortThreads = new Thread[P];
         CyclicBarrier barrier = new CyclicBarrier(P);
         int sectionSize = (int) Math.ceil(N/P);
@@ -61,7 +62,6 @@ public class BitonicSynchronized {
             sortThreads[i] = new Thread(new BitonicThreadLoop(data, barrier, startIndex, endIndex));
             sortThreads[i].start();
             startIndex = endIndex + 1; // set start index for next sorter
-            System.out.println("Thread Created");
         }
 
         for (int i = 0; i < P; i++) {
@@ -74,6 +74,10 @@ public class BitonicSynchronized {
 
         if (!RandomArrayGenerator.isSorted(data) || N != data.length)
             System.out.println("failed");
+
+        long end = System.currentTimeMillis();
+        long completed = end - start;
+        System.out.println("Time took: " + completed);
 
         for (int i = 0; i < P; i++)
             sortThreads[i].interrupt();
