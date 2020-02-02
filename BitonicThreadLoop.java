@@ -75,8 +75,14 @@ public class BitonicThreadLoop implements Runnable {
     public void run() {
         while(true) {
             sort();
-            newSortbarrier.await();
-            newSortbarrier.await();
+            try {
+                newSortbarrier.await();
+                newSortbarrier.await();
+            } catch (InterruptedException ex) {
+                return;
+            } catch (BrokenBarrierException ex) {
+                return;
+            }
         }
 
     }

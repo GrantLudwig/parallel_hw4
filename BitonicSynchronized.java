@@ -49,13 +49,20 @@ public class BitonicSynchronized {
 
 
         while (System.currentTimeMillis() < start + TIME_ALLOWED * 1000) {
-            newSortbarrier.await();
+            try {
+                newSortbarrier.await();
 
-            if (!RandomArrayGenerator.isSorted(data) || N != data.length)
-                System.out.println("failed");
-            work++;
-            data = RandomArrayGenerator.getArray(N);
-            newSortbarrier.await();
+                if (!RandomArrayGenerator.isSorted(data) || N != data.length)
+                    System.out.println("failed");
+                work++;
+                data = RandomArrayGenerator.getArray(N);
+
+                newSortbarrier.await();
+            } catch (InterruptedException ex) {
+                return;
+            } catch (BrokenBarrierException ex) {
+                return;
+            }
         }
 
         System.out.println("sorted " + work + " arrays (each: " + N + " doubles) in "
