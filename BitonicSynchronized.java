@@ -16,6 +16,7 @@ public class BitonicSynchronized {
     public static final int P = 2; // number of threads
     //public static final int TIME_ALLOWED = 10;  // seconds
     public static final int TIME_ALLOWED = 10;
+    public static double[] data;
 
     /**
      *
@@ -28,7 +29,7 @@ public class BitonicSynchronized {
         CyclicBarrier barrier = new CyclicBarrier(P);
         CyclicBarrier newSortbarrier = new CyclicBarrier(P + 1);
         int sectionSize = (int) Math.ceil(N/P);
-        double[] data = new double[N];
+        data = new double[N];
 
         data = RandomArrayGenerator.getArray(N);
         int startIndex = 0;
@@ -43,7 +44,7 @@ public class BitonicSynchronized {
             else
                 endIndex = calcIndex;
 
-            sortThreads[i] = new Thread(new BitonicThreadLoop(data, barrier, newSortbarrier, startIndex, endIndex));
+            sortThreads[i] = new Thread(new BitonicThreadLoop(barrier, newSortbarrier, startIndex, endIndex));
             sortThreads[i].start();
             startIndex = endIndex + 1; // set start index for next sorter
         }
@@ -57,12 +58,6 @@ public class BitonicSynchronized {
                     System.out.println("failed");
                 work++;
                 data = RandomArrayGenerator.getArray(N);
-                System.out.println(" ");
-                System.out.println("New Data array");
-                for (int i = 0; i < data.length; i++) {
-                    System.out.print(data[i] + " ");
-                }
-                System.out.println(" ");
                 newSortbarrier.await();
             } catch (InterruptedException ex) {
                 return;

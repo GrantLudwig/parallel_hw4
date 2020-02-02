@@ -28,6 +28,21 @@ public class BitonicThreadLoop implements Runnable {
         this.arraySize = data.length;
     }
 
+    /**
+     * Constructor for use in threaded version
+     * @param barrier
+     * @param newSortbarrier
+     * @param startIndex
+     * @param endIndex
+     */
+    public BitonicThreadLoop(CyclicBarrier barrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
+        this.barrier = barrier;
+        this.newSortbarrier = newSortbarrier;
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
+        this.arraySize = data.length;
+    }
+
     public void sort() {
         for (int k = 2; k <= arraySize; k *= 2) { // k is one bit, marching to the left
             // j is the distance between the first and second halves of the merge
@@ -74,11 +89,7 @@ public class BitonicThreadLoop implements Runnable {
     @Override
     public void run() {
         while(true) {
-            System.out.println(" ");
-            for (int i = 0; i < arraySize; i++) {
-                System.out.print(data[i] + " ");
-            }
-            System.out.println(" ");
+            data = BitonicSynchronized.data;
             sort();
             try {
                 newSortbarrier.await();
