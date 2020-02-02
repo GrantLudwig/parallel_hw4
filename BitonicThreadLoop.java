@@ -18,6 +18,7 @@ public class BitonicThreadLoop implements Runnable {
     private CyclicBarrier newSortbarrier;
     private int startIndex,
                 endIndex;
+    private string name;
 
     public BitonicThreadLoop(double[] data, CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
         this.data = data;
@@ -43,6 +44,15 @@ public class BitonicThreadLoop implements Runnable {
         this.endIndex = endIndex;
     }
 
+    public BitonicThreadLoop(CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex, string name) {
+        this.smallBarrier = smallBarrier;
+        this.largeBarrier = largeBarrier;
+        this.newSortbarrier = newSortbarrier;
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
+        this.name = name;
+    }
+
     public void sort() {
         for (int k = 2; k <= data.length; k *= 2) { // k is one bit, marching to the left
             // j is the distance between the first and second halves of the merge
@@ -61,11 +71,11 @@ public class BitonicThreadLoop implements Runnable {
                 }
                 try {
                     if (k == data.length) {
-                        //System.out.println("In large K: " + startIndex);
+                        System.out.println("In large K: " + name);
                         largeBarrier.await();
                     }
                     else {
-                        //System.out.println("small: " + startIndex);
+                        System.out.println("small: " + name);
                         smallBarrier.await();
                     }
                 } catch (InterruptedException ex) {

@@ -11,8 +11,8 @@ import java.util.concurrent.BrokenBarrierException;
 import java.lang.Math;
 
 public class BitonicSynchronized {
-    //public static final int N = 1 << 22;  // size of the final sorted array (power of two)
-    public static final int N = 16; // needs to be a multiple of 2
+    public static final int N = 1 << 22;  // size of the final sorted array (power of two)
+    //public static final int N = 16; // needs to be a multiple of 2
     public static final int P = 8; // number of threads
     //public static final int TIME_ALLOWED = 10;  // seconds
     public static final int TIME_ALLOWED = 10;
@@ -47,9 +47,9 @@ public class BitonicSynchronized {
                 endIndex = calcIndex;
 
             if (i < P/2)
-                sortThreads[i] = new Thread(new BitonicThreadLoop(smallBarrier1, largeBarrier, newSortbarrier, startIndex, endIndex));
+                sortThreads[i] = new Thread(new BitonicThreadLoop(smallBarrier1, largeBarrier, newSortbarrier, startIndex, endIndex, i));
             else
-                sortThreads[i] = new Thread(new BitonicThreadLoop(smallBarrier2, largeBarrier, newSortbarrier, startIndex, endIndex));
+                sortThreads[i] = new Thread(new BitonicThreadLoop(smallBarrier2, largeBarrier, newSortbarrier, startIndex, endIndex, i));
             sortThreads[i].start();
             startIndex = endIndex + 1; // set start index for next sorter
         }
