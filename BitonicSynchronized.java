@@ -54,16 +54,19 @@ public class BitonicSynchronized {
             startIndex = endIndex + 1; // set start index for next sorter
         }
 
-
+        int failed = 0;
         while (System.currentTimeMillis() < start + TIME_ALLOWED * 1000) {
             try {
                 double[] newArray = RandomArrayGenerator.getArray(N);
                 newSortbarrier.await(); // wait for sort to complete
 
-                if (!RandomArrayGenerator.isSorted(data) || N != data.length)
-                    System.out.println("failed");
+                double[] sortedArray = data;
                 data = newArray;
                 newSortbarrier.await(); // new data array created
+
+                if (!RandomArrayGenerator.isSorted(sortedArray) || N != sortedArray.length)
+                    failed++;
+                    //System.out.println("failed");
                 work++;
             } catch (InterruptedException ex) {
                 return;
@@ -73,7 +76,7 @@ public class BitonicSynchronized {
         }
 
         System.out.println("sorted " + work + " arrays (each: " + N + " doubles) in "
-                + TIME_ALLOWED + " seconds");
+                + TIME_ALLOWED + " seconds" + "failed " + failed);
 
         for (int i = 0; i < P; i++)
             sortThreads[i].interrupt();
