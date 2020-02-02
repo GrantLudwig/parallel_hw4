@@ -7,6 +7,7 @@
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.BrokenBarrierException;
 import java.lang.Math;
 
 public class BitonicSynchronized {
