@@ -33,7 +33,7 @@ public class BitonicThreadLoop implements Runnable {
      * @param startIndex
      * @param endIndex
      */
-    public BitonicThreadLoop(CyclicBarrier barrier, CyclicBarrier[] newSortbarrier, int startIndex, int endIndex) {
+    public BitonicThreadLoop(CyclicBarrier[] barrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
         this.barrier = barrier;
         this.newSortbarrier = newSortbarrier;
         this.startIndex = startIndex;
