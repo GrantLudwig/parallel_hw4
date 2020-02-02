@@ -44,12 +44,11 @@ public class BitonicSynchronized {
             else
                 endIndex = calcIndex;
 
-            sortThreads[i] = new Thread(new BitonicThreadLoop(barrier, newSortbarrier, startIndex, endIndex, "thread " + i));
+            sortThreads[i] = new Thread(new BitonicThreadLoop(barrier, newSortbarrier, startIndex, endIndex));
             sortThreads[i].start();
             startIndex = endIndex + 1; // set start index for next sorter
         }
 
-        int failed = 0;
         while (System.currentTimeMillis() < start + TIME_ALLOWED * 1000) {
             try {
                 double[] newArray = RandomArrayGenerator.getArray(N);
@@ -60,8 +59,7 @@ public class BitonicSynchronized {
                 newSortbarrier.await(); // new data array created
 
                 if (!RandomArrayGenerator.isSorted(sortedArray) || N != sortedArray.length)
-                    failed++;
-                    //System.out.println("failed");
+                    System.out.println("failed");
                 work++;
             } catch (InterruptedException ex) {
                 return;
@@ -71,7 +69,7 @@ public class BitonicSynchronized {
         }
 
         System.out.println("sorted " + work + " arrays (each: " + N + " doubles) in "
-                + TIME_ALLOWED + " seconds" + " failed " + failed);
+                + TIME_ALLOWED + " seconds");
 
         for (int i = 0; i < P; i++)
             sortThreads[i].interrupt();
