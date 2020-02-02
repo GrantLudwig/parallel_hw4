@@ -65,7 +65,7 @@ public class BitonicSynchronized {
 
         for (int i = 0; i < P; i++) {
             try {
-                sortThreads[i].wait();
+                sortThreads[i].join();
             } catch (InterruptedException ex) {
                 return;
             }
