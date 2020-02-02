@@ -24,6 +24,7 @@ public class BitonicThreadLoop implements Runnable {
         this.startIndex = startIndex;
         this.endIndex = endIndex;
         this.arraySize = endIndex - startIndex + 1;
+        System.out.println("Start: " + startIndex + " End: " + endIndex + " ArraySize: " + arraySize);
     }
 
     public void sort() {
