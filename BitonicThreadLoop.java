@@ -7,6 +7,7 @@
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.BrokenBarrierException;
 
 public class BitonicThreadLoop implements Runnable {
     private static final int timeout = 10;  // in seconds
