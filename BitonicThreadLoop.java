@@ -41,6 +41,9 @@ public class BitonicThreadLoop implements Runnable {
         this.endIndex = endIndex;
     }
 
+    /**
+     * Sorts the data array
+     */
     public void sort() {
         for (int k = 2; k <= data.length; k *= 2) { // k is one bit, marching to the left
             // j is the distance between the first and second halves of the merge
