@@ -50,7 +50,7 @@ public class BitonicSynchronized {
         // setup threads
         for (int i = 0; i < P; i++) {
             int     endIndex,
-                    calcIndex = startIndex + sectionSize;
+                    calcIndex = startIndex + sectionSize - 1;
 
             // setup endIndex
             if (calcIndex >= N)
