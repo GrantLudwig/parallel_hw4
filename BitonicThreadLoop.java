@@ -86,11 +86,11 @@ public class BitonicThreadLoop implements Runnable {
     @Override
     public void run() {
         while(true) {
-            data = BitonicSynchronized.data;
+            data = BitonicSynchronized.data; // get the data array to be sorted
             sort();
             try {
-                newSortbarrier.await();
-                newSortbarrier.await();
+                newSortbarrier.await(); // sort completed
+                newSortbarrier.await(); // new data array is created
             } catch (InterruptedException ex) {
                 return;
             } catch (BrokenBarrierException ex) {
