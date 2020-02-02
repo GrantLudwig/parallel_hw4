@@ -26,9 +26,9 @@ public class BitonicSynchronized {
         long start = System.currentTimeMillis();
         int work = 0;
         Thread[] sortThreads = new Thread[P];
-        CyclicBarrier[] smallBarrier1 = new CyclicBarrier(P/2);
-        CyclicBarrier[] smallBarrier2 = new CyclicBarrier(P/2);
-        CyclicBarrier[] largeBarrier = new CyclicBarrier(P);
+        CyclicBarrier smallBarrier1 = new CyclicBarrier(P/2);
+        CyclicBarrier smallBarrier2 = new CyclicBarrier(P/2);
+        CyclicBarrier largeBarrier = new CyclicBarrier(P);
         CyclicBarrier newSortbarrier = new CyclicBarrier(P + 1);
         int sectionSize = (int) Math.ceil(N/P);
         data = new double[N];
