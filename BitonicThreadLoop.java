@@ -62,11 +62,11 @@ public class BitonicThreadLoop implements Runnable {
                 try {
                     if (k == data.length) {
                         System.out.println("In large K: " + startIndex);
-                        barrier[1].await();
+                        largeBarrier.await();
                     }
                     else {
                         System.out.println("small: " + startIndex);
-                        barrier[0].await();
+                        smallBarrier.await();
                     }
                 } catch (InterruptedException ex) {
                     return;
