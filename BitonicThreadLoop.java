@@ -6,19 +6,22 @@
  */
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.CyclicBarrier;
 
 public class BitonicThreadLoop implements Runnable {
     private static final int timeout = 10;  // in seconds
 
     private double[] data;
+    private CyclicBarrier barrier;
     private int startIndex,
                 endIndex,
                 arraySize;
 
-    public BitonicThreadLoop(double[] data, int startIndex, int endIndex) {
+    public BitonicThreadLoop(double[] data, CyclicBarrier barrier, int startIndex, int endIndex) {
+        this.barrier = barrier;
+        this.data = data;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
-        this.data = data;
         this.arraySize = endIndex - startIndex + 1;
     }
 
@@ -28,7 +31,7 @@ public class BitonicThreadLoop implements Runnable {
             // corresponds to 1<<p in textbook
             for (int j = k / 2; j > startIndex; j /= 2) {  // j is one bit, marching from k to the right
                 // i is the merge element
-                for (int i = startIndex; i < arraySize; i++) {
+                for (int i = startIndex; i < endIndex; i++) {
                     int ixj = i ^ j;  // xor: all the bits that are on in one and off in the other
                     // only compare if ixj is to the right of i
                     if (ixj > i) {
@@ -37,6 +40,13 @@ public class BitonicThreadLoop implements Runnable {
                         if ((i & k) != 0 && data[i] < data[ixj])
                             swap(i, ixj);
                     }
+                }
+                try {
+                    barrier.await();
+                } catch (InterruptedException ex) {
+                    return;
+                } catch (BrokenBarrierException ex) {
+                    return;
                 }
             }
         }
@@ -47,12 +57,7 @@ public class BitonicThreadLoop implements Runnable {
      */
     @Override
     public void run() {
-//        while (true) {
-//            try {
-//            } catch (InterruptedException e) {
-//                return;
-//            }
-//        }
+        sort();
     }
 
     private void swap(int firstIndex, int secondIndex) {
