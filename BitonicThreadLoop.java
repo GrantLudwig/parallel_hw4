@@ -18,7 +18,7 @@ public class BitonicThreadLoop implements Runnable {
     private CyclicBarrier newSortbarrier;
     private int startIndex,
                 endIndex;
-    private string name;
+    private String name;
 
     public BitonicThreadLoop(double[] data, CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
         this.data = data;
@@ -44,7 +44,7 @@ public class BitonicThreadLoop implements Runnable {
         this.endIndex = endIndex;
     }
 
-    public BitonicThreadLoop(CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex, string name) {
+    public BitonicThreadLoop(CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex, String name) {
         this.smallBarrier = smallBarrier;
         this.largeBarrier = largeBarrier;
         this.newSortbarrier = newSortbarrier;
