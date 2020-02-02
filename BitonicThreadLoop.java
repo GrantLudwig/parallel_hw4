@@ -74,6 +74,11 @@ public class BitonicThreadLoop implements Runnable {
     @Override
     public void run() {
         while(true) {
+            System.out.println(" ");
+            for (int i = 0; i < arraySize; i++) {
+                System.out.print(data[i] + " ");
+            }
+            System.out.println(" ");
             sort();
             try {
                 newSortbarrier.await();

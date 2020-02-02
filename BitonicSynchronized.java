@@ -11,8 +11,8 @@ import java.util.concurrent.BrokenBarrierException;
 import java.lang.Math;
 
 public class BitonicSynchronized {
-    public static final int N = 1 << 22;  // size of the final sorted array (power of two)
-    //public static final int N = 16;
+    //public static final int N = 1 << 22;  // size of the final sorted array (power of two)
+    public static final int N = 16;
     public static final int P = 2; // number of threads
     //public static final int TIME_ALLOWED = 10;  // seconds
     public static final int TIME_ALLOWED = 10;
@@ -57,7 +57,12 @@ public class BitonicSynchronized {
                     System.out.println("failed");
                 work++;
                 data = RandomArrayGenerator.getArray(N);
-
+                System.out.println(" ");
+                System.out.println("New Data array");
+                for (int i = 0; i < arraySize; i++) {
+                    System.out.print(data[i] + " ");
+                }
+                System.out.println(" ");
                 newSortbarrier.await();
             } catch (InterruptedException ex) {
                 return;
