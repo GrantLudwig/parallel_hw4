@@ -10,15 +10,17 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.BrokenBarrierException;
 import java.lang.Math;
 
+/**
+ * @class BitonicSynchronized runner class for testing threaded bitonic sort
+ */
 public class BitonicSynchronized {
     public static final int N = 1 << 22;  // size of the final sorted array (power of two)
-    public static final int P = 8; // number of threads
+    public static final int P = 16; // number of threads
     public static final int TIME_ALLOWED = 10;  // seconds
 
-    public static double[] data;
+    public static double[] data; // public for BitonicThreadLoop to use
 
     /**
-     *
      * @param args not used
      */
     public static void main(String[] args) {
@@ -49,9 +51,10 @@ public class BitonicSynchronized {
             startIndex = endIndex + 1; // set start index for next sorter
         }
 
+        // test
         while (System.currentTimeMillis() < start + TIME_ALLOWED * 1000) {
             try {
-                double[] newArray = RandomArrayGenerator.getArray(N);
+                double[] newArray = RandomArrayGenerator.getArray(N); // create new random array while threads are sorting
                 newSortbarrier.await(); // wait for sort to complete
 
                 double[] sortedArray = data;
@@ -71,6 +74,7 @@ public class BitonicSynchronized {
         System.out.println("sorted " + work + " arrays (each: " + N + " doubles) in "
                 + TIME_ALLOWED + " seconds");
 
+        // stop threads
         for (int i = 0; i < P; i++)
             sortThreads[i].interrupt();
     }

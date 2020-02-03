@@ -5,7 +5,6 @@
  * 2/2/20
  */
 
-//import java.util.concurrent.TimeUnit;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.BrokenBarrierException;
 
@@ -20,6 +19,15 @@ public class BitonicThreadLoop implements Runnable {
                 endIndex;
     private String name;
 
+    /**
+     * Constructor for non threaded version
+     * @param data array of the data to be sorted
+     * @param smallBarrier CyclicBarrier
+     * @param largeBarrier CyclicBarrier
+     * @param newSortbarrier CyclicBarrier for starting and stoping the whole sort
+     * @param startIndex index of first array element
+     * @param endIndex index of last array element
+     */
     public BitonicThreadLoop(double[] data, CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
         this.data = data;
         this.smallBarrier = smallBarrier;
@@ -31,10 +39,11 @@ public class BitonicThreadLoop implements Runnable {
 
     /**
      * Constructor for use in threaded version
-     * @param barrier
-     * @param newSortbarrier
-     * @param startIndex
-     * @param endIndex
+     * @param smallBarrier CyclicBarrier
+     * @param largeBarrier CyclicBarrier
+     * @param newSortbarrier CyclicBarrier for starting and stoping the whole sort
+     * @param startIndex index of first array element
+     * @param endIndex index of last array element
      */
     public BitonicThreadLoop(CyclicBarrier smallBarrier, CyclicBarrier largeBarrier, CyclicBarrier newSortbarrier, int startIndex, int endIndex) {
         this.smallBarrier = smallBarrier;
@@ -65,9 +74,9 @@ public class BitonicThreadLoop implements Runnable {
                 }
                 try {
                     if (j >= endIndex - startIndex + 1)
-                        smallBarrier.await();
+                        smallBarrier.await(); // will stop when needing to access members outside of its range
                     else if (k >= endIndex - startIndex + 1)
-                        largeBarrier.await();
+                        largeBarrier.await(); // will stop when needing to access members outside of its range
                 } catch (InterruptedException ex) {
                     return;
                 } catch (BrokenBarrierException ex) {
@@ -77,6 +86,11 @@ public class BitonicThreadLoop implements Runnable {
         }
     }
 
+    /**
+     * Swaps elements of the data array
+     * @param firstIndex
+     * @param secondIndex
+     */
     private void swap(int firstIndex, int secondIndex) {
         double temp = data[firstIndex];
         data[firstIndex] = data[secondIndex];
