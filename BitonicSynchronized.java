@@ -25,7 +25,8 @@ public class BitonicSynchronized {
         long start = System.currentTimeMillis();
         int work = 0;
         Thread[] sortThreads = new Thread[P];
-        CyclicBarrier barrier = new CyclicBarrier(P);
+        CyclicBarrier smallBarrier = new CyclicBarrier(P);
+        CyclicBarrier largeBarrier = new CyclicBarrier(P);
         CyclicBarrier newSortbarrier = new CyclicBarrier(P + 1);
         int sectionSize = (int) Math.ceil(N/P);
         data = new double[N];
@@ -43,7 +44,7 @@ public class BitonicSynchronized {
             else
                 endIndex = calcIndex;
 
-            sortThreads[i] = new Thread(new BitonicThreadLoop(barrier, newSortbarrier, startIndex, endIndex));
+            sortThreads[i] = new Thread(new BitonicThreadLoop(smallBarrier, largeBarrier, newSortbarrier, startIndex, endIndex));
             sortThreads[i].start();
             startIndex = endIndex + 1; // set start index for next sorter
         }
